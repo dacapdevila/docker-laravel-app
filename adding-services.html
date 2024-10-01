@@ -1,0 +1,201 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en-US" data-preset="contrast" data-primary-color="#307FFF"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><meta name="built-on" content="2024-10-01T12:55:23.3723251"><title>Docker Tutorial - Parte 2/2 | Docker Tutorial</title><script type="application/json" id="virtual-toc-data">[{"id":"agregando-un-segundo-servicio-con-estructura-monorepo","level":0,"title":"Agregando un segundo servicio con estructura monorepo","anchor":"#agregando-un-segundo-servicio-con-estructura-monorepo"},{"id":"pre-requisitos","level":0,"title":"Pre-requisitos","anchor":"#pre-requisitos"},{"id":"creando-el-dokerfile-del-nuevo-servicio","level":0,"title":"Creando el Dokerfile del nuevo servicio","anchor":"#creando-el-dokerfile-del-nuevo-servicio"}]</script><script type="application/json" id="topic-shortcuts"></script><link href="https://resources.jetbrains.com/writerside/apidoc/6.10.0-b419/app.css" rel="stylesheet"><meta name="msapplication-TileColor" content="#000000"><link rel="apple-touch-icon" sizes="180x180" href="https://jetbrains.com/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="https://jetbrains.com/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="https://jetbrains.com/favicon-16x16.png"><meta name="msapplication-TileImage" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-144x144.png"><meta name="msapplication-square70x70logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-70x70.png"><meta name="msapplication-square150x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-150x150.png"><meta name="msapplication-wide310x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x150.png"><meta name="msapplication-square310x310logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x310.png"><meta name="image" content=""><!-- Open Graph --><meta property="og:title" content="Docker Tutorial - Parte 2/2 | Docker Tutorial"><meta property="og:description" content=""><meta property="og:image" content=""><meta property="og:site_name" content="Docker Tutorial Help"><meta property="og:type" content="website"><meta property="og:locale" content="en_US"><meta property="og:url" content="writerside-documentation/adding-services.html"><!-- End Open Graph --><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content=""><meta name="twitter:title" content="Docker Tutorial - Parte 2/2 | Docker Tutorial"><meta name="twitter:description" content=""><meta name="twitter:creator" content=""><meta name="twitter:image:src" content=""><!-- End Twitter Card --><!-- Schema.org WebPage --><script type="application/ld+json">{
+    "@context": "http://schema.org",
+    "@type": "WebPage",
+    "@id": "writerside-documentation/adding-services.html#webpage",
+    "url": "writerside-documentation/adding-services.html",
+    "name": "Docker Tutorial - Parte 2/2 | Docker Tutorial",
+    "description": "",
+    "image": "",
+    "inLanguage":"en-US"
+}</script><!-- End Schema.org --><!-- Schema.org WebSite --><script type="application/ld+json">{
+    "@type": "WebSite",
+    "@id": "writerside-documentation/#website",
+    "url": "writerside-documentation/",
+    "name": "Docker Tutorial Help"
+}</script><!-- End Schema.org --></head><body data-id="Adding-services" data-main-title="Docker Tutorial - Parte 2/2" data-article-props="{&quot;seeAlsoStyle&quot;:&quot;links&quot;}" data-template="article" data-breadcrumbs=""><div class="wrapper"><main class="panel _main"><header class="panel__header"><div class="container"><h3>Docker Tutorial  Help</h3><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Adding-services" id="Adding-services.md">Docker Tutorial - Parte 2/2</h1><section class="chapter"><h2 id="agregando-un-segundo-servicio-con-estructura-monorepo" data-toc="agregando-un-segundo-servicio-con-estructura-monorepo">Agregando un segundo servicio con estructura monorepo</h2><p id="hurt9v_6">Ya tenemos la estructura b&aacute;sica del monorepo, sin embargo, a&uacute;n quedan cosas por resolver:</p><ol class="list _decimal" id="hurt9v_7" type="1"><li class="list__item" id="hurt9v_8"><p>Agregar un segundo servicio.</p></li><li class="list__item" id="hurt9v_9"><p>Redirigir a partir de path espec&iacute;fico las llamadas a este segundo servicio.</p></li></ol></section><section class="chapter"><h2 id="pre-requisitos" data-toc="pre-requisitos">Pre-requisitos</h2><section class="chapter"><h3 id="docker-tutorial-parte-1" data-toc="docker-tutorial-parte-1">Docker Tutorial - Parte 1:</h3><ul class="list _bullet" id="hurt9v_11"><li class="list__item" id="hurt9v_12"><p id="hurt9v_16">Haber completado la parte 1.</p></li><li class="list__item" id="hurt9v_13"><p id="hurt9v_17">Crear un nuevo branch, llamado &quot; <span class="control" id="hurt9v_18">base-local-2</span> &quot;.</p></li><li class="list__item" id="hurt9v_14"><p id="hurt9v_19">Agregar el nuevo servicio:</p><div class="code-block" data-lang="bash">
+mkdir frontend-kitchen
+cd frontend-kitchen
+composer create-project laravel/laravel .
+</div></li><li class="list__item" id="hurt9v_15"><p id="hurt9v_21">Subir el contenido al branch &quot; <span class="control" id="hurt9v_22">base-local-2</span> &quot;.</p></li></ul></section></section><section class="chapter"><h2 id="creando-el-dokerfile-del-nuevo-servicio" data-toc="creando-el-dokerfile-del-nuevo-servicio">Creando el Dokerfile del nuevo servicio</h2><ul class="list _bullet" id="hurt9v_23"><li class="list__item" id="hurt9v_27"><p id="hurt9v_33">En el caso de que dentro de frontend-kitchen/ no exista un archivo .env, se debe crear:</p><div class="code-block" data-lang="bash">
+cp .env.example .env
+</div></li><li class="list__item" id="hurt9v_28"><p id="hurt9v_35">Editar el archivo <span class="control" id="hurt9v_37"><code class="code" id="hurt9v_38">.env</code></span></p><div class="code-block" data-lang="bash">
+APP_NAME=&quot;Kitchen Service&quot;
+APP_ENV=local
+APP_KEY=
+APP_DEBUG=true
+APP_URL=http://localhost:8000/kitchen
+
+DB_CONNECTION=mysql
+DB_HOST=db
+DB_PORT=3306
+DB_DATABASE=kitchen
+DB_USERNAME=kitchen_user
+DB_PASSWORD=secret_password
+
+# These variables will be used on docker-compose.yml
+...
+</div></li><li class="list__item" id="hurt9v_29"><p id="hurt9v_39">Crear Dockerfile:</p><div class="code-block" data-lang="bash">
+ touch Dokerfile
+</div></li><li class="list__item" id="hurt9v_30"><p id="hurt9v_41">Copiar el siguiente contenido al Dockerfile:</p><div class="code-block" data-lang="dockerfile">
+# Placed in kitchen-service/Dockerfile
+FROM php:8.2-fpm
+
+# Arguments defined in docker-compose.yml
+ARG user
+ARG uid
+
+# Install system dependecies
+RUN apt-get update &amp;&amp; apt-get install -y \
+ git \
+ curl \
+ libpng-dev \
+ libonig-dev \
+ libxml2-dev \
+ zip \
+ unzip
+
+# Clear cache
+RUN apt-get clean &amp;&amp; rm -rf /var/lib/apt/lists/*
+
+# Install PHP extensions
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+
+# Get latest Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Create system user to run cComposer and Artisan Commands
+RUN useradd -G www-data,root -u $uid -d /home/$user $user
+RUN mkdir -p /home/$user/.composer &amp;&amp; \
+ chown -R $user:$user /home/$user
+
+# Set working directory
+WORKDIR /var/www
+
+USER $user
+</div></li><li class="list__item" id="hurt9v_31"><p id="hurt9v_43">Actualizar el archivo:</p><div class="code-block" data-lang="bash">
+  nano docker-compose/nginx/frontend-service.conf
+</div></li><li class="list__item" id="hurt9v_32"><p id="hurt9v_45">Copiar el siguiente contenido en frontend-service.conf:</p><div class="code-block" data-lang="bash">
+  server {
+listen 80;
+index index.php index.html;
+# error_log /var/nginx/error.log;
+# access_log /var/nginx/access.log;
+root /var/www/public;
+
+location / {
+  try_files $uri $uri/ /index.php?$query_string;
+  gzip_static on;
+}
+
+location ~ \.php$ {
+  try_files $uri =404;
+  fastcgi_split_path_info ^(.+\.php)(/.+)$;
+  fastcgi_pass frontend-service:9000;
+  fastcgi_index index.php;
+  include fastcgi_params;
+  fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+  fastcgi_param PATH_INFO $fastcgi_path_info;
+}
+
+location ~ /\.ht {
+  deny all;
+}
+</div></li></ul><p id="hurt9v_24">}</p><section class="chapter"><h3 id="editando-el-docker-compose-yml" data-toc="editando-el-docker-compose-yml">Editando el docker-compose.yml</h3><div class="code-block" data-lang="yaml">
+    services:
+      frontend-service:
+        build:
+          args:
+            user: admin
+            uid: 1000
+          context: ./
+          dockerfile: Dockerfile
+        image: dockerlaravelapp
+        container_name: docker-laravel-app
+        restart: unless-stopped
+        working_dir: /var/www/
+        volumes:
+          - ./frontend-service:/var/www
+        networks:
+          - laravel-app
+
+      kitchen-service:
+        build:
+          args:
+            user: admin
+            uid: 1000
+          context: ./
+          dockerfile: Dockerfile
+        image: dockerlaravelapp
+        container_name: kitchen
+        restart: unless-stopped
+        working_dir: /var/www/
+        volumes:
+          - ./kitchen-service:/var/www
+        networks:
+          - laravel-app
+
+      db:
+        platform: linux/x86_64 # Mac M1
+        image: mysql:8.0
+        container_name: frontend_db
+        restart: unless-stopped
+        environment:
+          MYSQL_DATABASE: ${DB_DATABASE}
+          MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+          MYSQL_PASSWORD: ${DB_PASSWORD}
+          MYSQL_USER: ${DB_USERNAME}
+          SERVICE_TAGS: dev
+          SERVICE_NAME: mysql
+        volumes:
+          - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+        ports:
+          - &quot;3307:3306&quot;
+        networks:
+          - laravel-app
+  
+      nginx:
+        image: nginx:alpine
+        container_name: nginx
+        restart: unless-stopped
+        ports:
+          - &quot;8000:80&quot;
+        volumes:
+          - ./frontend-service:/var/www
+          - ./docker-compose/nginx:/etc/nginx/conf.d/
+        depends_on:
+          - frontend-service
+        networks:
+          - laravel-app
+  
+    networks:
+      laravel-app:
+        driver: bridge
+</div></section><section class="chapter"><h3 id="corriendo-la-aplicaci-n" data-toc="corriendo-la-aplicaci-n">Corriendo la aplicaci&oacute;n</h3><ul class="list _bullet" id="hurt9v_48"><li class="list__item" id="hurt9v_49"><p id="hurt9v_57">Para crear la aplicaci&oacute;n es necesario correr comandos de Docker:</p><div class="code-block" data-lang="bash">
+  docker-compose build frontend-service
+  docker-compose build kitchen-service
+</div></li><li class="list__item" id="hurt9v_50"><p id="hurt9v_59">Una vez que termine de crear el servicio, es necesario levantar el servicio con:</p><div class="code-block" data-lang="bash">
+  docker-compose up -d
+</div></li><li class="list__item" id="hurt9v_51"><p id="hurt9v_61">Para ver los servicios Docker que esten funcionando:</p><div class="code-block" data-lang="bash">
+  docker-compose ps
+</div></li><li class="list__item" id="hurt9v_52"><p id="hurt9v_63">A&uacute;n es necesario correr algunos comandos m&aacute;s:</p><div class="code-block" data-lang="bash">
+  docker-compose exec frontend-service ls -l
+  docker-compose exec kitchen-service ls -l
+</div></li><li class="list__item" id="hurt9v_53"><p id="hurt9v_65">Correr compose install:</p><div class="code-block" data-lang="bash">
+  docker-compose exec frontend-service rm -rf vendor composer.lock
+  docker-compose exec frontend-service composer install
+
+  docker-compose exec kitchen-service rm -rf vendor composer.lock
+  docker-compose exec kitchen-service composer install
+</div></li><li class="list__item" id="hurt9v_54"><p id="hurt9v_67">Crear el APP_KEY:</p><div class="code-block" data-lang="bash">
+  docker-compose exec frontend-service php artisan key:generate
+
+  docker-compose exec kitchen-service php artisan key:generate
+</div></li><li class="list__item" id="hurt9v_55"><p id="hurt9v_69">Correr migraciones:</p><div class="code-block" data-lang="bash">
+  docker-compose exec frontend-service php artisan migrate
+
+  docker-compose exec kitchen-service php artisan migrate
+</div></li><li class="list__item" id="hurt9v_56"><p id="hurt9v_71">Abrir la url:</p><div class="code-block" data-lang="bash">
+  http://localhost:8000/
+  http://localhost:8000/kitchen
+</div></li></ul></section></section><div class="last-modified">Last modified: 01 octubre 2024</div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom"><a href="tutorial.html" class="navigation-links__prev">Docker Tutorial - Parte 1/2</a></div></article><div id="disqus_thread"></div></div></section></main></div><script src="https://resources.jetbrains.com/writerside/apidoc/6.10.0-b419/app.js"></script></body></html>
