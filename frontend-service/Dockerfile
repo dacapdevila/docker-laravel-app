@@ -1,5 +1,5 @@
 # Placed in frontend-service/Dockerfile
- FROM php:7.4-fpm
+FROM php:8.2-fpm
 
 # Arguments defined in docker-compose.yml
 ARG user
@@ -25,7 +25,8 @@ RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Create system user to run cComposer and Artisan Commands
-RUN useradd -G www-data, root -u $uid -d /home/$user $user
+RUN useradd -G www-data,root -u $uid -d /home/$user $user
+
 RUN mkdir -p /home/$user/.composer && \
  chown -R $user:$user /home/$user
 
