@@ -1,0 +1,48 @@
+services:
+  frontend-service:
+    build:
+      args:
+        user: admin
+        uid: 1000
+      context: ./frontend-service
+      dockerfile: Dockerfile
+    image: DockerLaravelApp
+    container_name: docker-laravel-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    networks:
+      - laravel-app
+
+  db:
+    image: mysql:5.7
+    container_name: frontend_db
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+    networks:
+      - laravel-app
+
+  nginx:
+    image: nxing:alpine
+    container_name: nginx
+    restart: unless-stopped
+    ports:
+      - 8000:80
+    volumes:
+      - ./:/var/www
+      - ./docker-compose/nginx:/etc/nginx/config.d/
+    networks:
+      - laravel-app
+
+networks:
+  laravel-app:
+    driver: bridge
