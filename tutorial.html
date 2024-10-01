@@ -1,0 +1,175 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en-US" data-preset="contrast" data-primary-color="#307FFF"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><meta name="built-on" content="2024-10-01T01:19:39.8531293"><title>Docker Tutorial | Instance Name</title><script type="application/json" id="virtual-toc-data">[{"id":"pre-requisitos","level":0,"title":"Pre-requisitos","anchor":"#pre-requisitos"},{"id":"creando-el-dokerfile-del-servicio","level":0,"title":"Creando el Dokerfile del servicio","anchor":"#creando-el-dokerfile-del-servicio"},{"id":"seteando-la-configuraci-n-de-nginx-y-los-database-dump-files","level":0,"title":"Seteando la configuración de Nginx y los database dump files","anchor":"#seteando-la-configuraci-n-de-nginx-y-los-database-dump-files"}]</script><script type="application/json" id="topic-shortcuts"></script><link href="https://resources.jetbrains.com/writerside/apidoc/6.10.0-b419/app.css" rel="stylesheet"><meta name="msapplication-TileColor" content="#000000"><link rel="apple-touch-icon" sizes="180x180" href="https://jetbrains.com/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="https://jetbrains.com/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="https://jetbrains.com/favicon-16x16.png"><meta name="msapplication-TileImage" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-144x144.png"><meta name="msapplication-square70x70logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-70x70.png"><meta name="msapplication-square150x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-150x150.png"><meta name="msapplication-wide310x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x150.png"><meta name="msapplication-square310x310logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x310.png"><meta name="image" content=""><!-- Open Graph --><meta property="og:title" content="Docker Tutorial | Instance Name"><meta property="og:description" content=""><meta property="og:image" content=""><meta property="og:site_name" content="Instance Name Help"><meta property="og:type" content="website"><meta property="og:locale" content="en_US"><meta property="og:url" content="writerside-documentation/tutorial.html"><!-- End Open Graph --><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content=""><meta name="twitter:title" content="Docker Tutorial | Instance Name"><meta name="twitter:description" content=""><meta name="twitter:creator" content=""><meta name="twitter:image:src" content=""><!-- End Twitter Card --><!-- Schema.org WebPage --><script type="application/ld+json">{
+    "@context": "http://schema.org",
+    "@type": "WebPage",
+    "@id": "writerside-documentation/tutorial.html#webpage",
+    "url": "writerside-documentation/tutorial.html",
+    "name": "Docker Tutorial | Instance Name",
+    "description": "",
+    "image": "",
+    "inLanguage":"en-US"
+}</script><!-- End Schema.org --><!-- Schema.org WebSite --><script type="application/ld+json">{
+    "@type": "WebSite",
+    "@id": "writerside-documentation/#website",
+    "url": "writerside-documentation/",
+    "name": "Instance Name Help"
+}</script><!-- End Schema.org --></head><body data-id="Tutorial" data-main-title="Docker Tutorial" data-article-props="{&quot;seeAlsoStyle&quot;:&quot;links&quot;}" data-template="article" data-breadcrumbs=""><div class="wrapper"><main class="panel _main"><header class="panel__header"><div class="container"><h3>Instance Name  Help</h3><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Tutorial" id="Tutorial.md">Docker Tutorial</h1><p id="ipgi4w_3">La idea de esta guia es poder ir paso a paso, avanzando en la creaci&oacute;n de la estructura de los microservicios, utilizando Docker.</p><section class="chapter"><h2 id="pre-requisitos" data-toc="pre-requisitos">Pre-requisitos</h2><section class="chapter"><h3 id="github" data-toc="github">Github:</h3><ul class="list _bullet" id="ipgi4w_9"><li class="list__item" id="ipgi4w_10"><p id="ipgi4w_15">Crear un repo:</p><ul class="list _bullet" id="ipgi4w_16"><li class="list__item" id="ipgi4w_17"><p><a href="https://github.com/dacapdevila/docker-laravel-app" id="ipgi4w_18" data-external="true" rel="noopener noreferrer">Docker Laravel App</a></p></li></ul></li><li class="list__item" id="ipgi4w_11"><p id="ipgi4w_19">Subir archivo .gitignore.</p></li><li class="list__item" id="ipgi4w_12"><p id="ipgi4w_20">Crear un nuevo branch, llamado &quot; <span class="control" id="ipgi4w_21">base</span> &quot;.</p></li><li class="list__item" id="ipgi4w_13"><p id="ipgi4w_22">Agregar la estructura b&aacute;sica:</p><div class="code-block" data-lang="bash">
+mkdir frontend-service
+cd frontend-service
+composer create-project laravel/laravel .
+</div></li><li class="list__item" id="ipgi4w_14"><p id="ipgi4w_24">Subir el contenido al branch &quot; <span class="control" id="ipgi4w_25">base</span> &quot;.</p></li></ul></section></section><section class="chapter"><h2 id="creando-el-dokerfile-del-servicio" data-toc="creando-el-dokerfile-del-servicio">Creando el Dokerfile del servicio</h2><ul class="list _bullet" id="ipgi4w_26"><li class="list__item" id="ipgi4w_27"><p id="ipgi4w_32">Crear nuevo branch: &quot; <span class="control" id="ipgi4w_33">base-1-local</span> &quot;.</p></li><li class="list__item" id="ipgi4w_28"><p id="ipgi4w_34">En el caso de que dentro de frontend-service/ no exista un archivo .env, se debe crear:</p><div class="code-block" data-lang="bash">
+cp .env.example .env
+</div></li><li class="list__item" id="ipgi4w_29"><p id="ipgi4w_36">Editar el archivo <span class="control" id="ipgi4w_38"><code class="code" id="ipgi4w_39">.env</code></span></p><div class="code-block" data-lang="bash">
+APP_NAME=&quot;Frontend Service&quot;
+APP_ENV=local
+APP_KEY=
+APP_DEBUG=true
+APP_URL=http://localhost:8000
+
+DB_CONNECTION=mysql
+DB_HOST=db
+DB_PORT=3306
+DB_DATABASE=frontend
+DB_USERNAME=frontend_user
+DB_PASSWORD=secret_password
+
+# These variables will be used on docker-compose.yml
+...
+</div></li><li class="list__item" id="ipgi4w_30"><p id="ipgi4w_40">Crear Dockerfile:</p><div class="code-block" data-lang="bash">
+ touch Dokerfile
+</div></li><li class="list__item" id="ipgi4w_31"><p id="ipgi4w_42">Copiar el siguiente contenido al Dockerfile:</p><div class="code-block" data-lang="dockerfile">
+# Placed in frontend-service/Dockerfile
+ FROM php:7.4-fpm
+
+# Arguments defined in docker-compose.yml
+ARG user
+ARG uid
+
+# Install system dependecies
+RUN apt-get update &amp;&amp; apt-get install -y \
+ git \
+ curl \
+ libpng-dev \
+ libonig-dev \
+ libxml2-dev \
+ zip \
+ unzip
+
+# Clear cache
+RUN apt-get clean &amp;&amp; rm -rf /var/lib/apt/lists/*
+
+# Install PHP extensions
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+
+# Get latest Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Create system user to run cComposer and Artisan Commands
+RUN useradd -G www-data, root -u $uid -d /home/$user $user
+RUN mkdir -p /home/$user/.composer &amp;&amp; \
+ chown -R $user:$user /home/$user
+
+# Set working directory
+WORKDIR /var/www
+
+USER $user
+</div></li></ul></section><section class="chapter"><h2 id="seteando-la-configuraci-n-de-nginx-y-los-database-dump-files" data-toc="seteando-la-configuraci-n-de-nginx-y-los-database-dump-files">Seteando la configuraci&oacute;n de Nginx y los database dump files</h2><ul class="list _bullet" id="ipgi4w_44"><li class="list__item" id="ipgi4w_47"><p id="ipgi4w_53">Crear una carpeta en docker-compose/nginx para ubicar toda la configuraci&oacute;n de nginx:</p><div class="code-block" data-lang="bash">
+ mkdir -p docker-compose/nginx
+</div></li><li class="list__item" id="ipgi4w_48"><p id="ipgi4w_55">Crear el archivo frontend-service.conf dentro de ese directorio:</p><div class="code-block" data-lang="bash">
+  touch docker-compose/nginx/frontend-service.conf
+</div></li><li class="list__item" id="ipgi4w_49"><p id="ipgi4w_57">Copiar el siguiente contenido en frontend-service.conf:</p><div class="code-block" data-lang="bash">
+  server {
+    listen 80;
+    index index.php index.html
+    error_log /var/nginx/error.log
+    access_log /var/nginx/access.log
+    root /var/www/public;
+
+    location ~ \.php$ {
+      try_files $uri =404;
+      fastcgi_split_path_info ^(.+\.php)(/.+)$;
+      fastcgi_pass frontend-service:9000;
+      fastcgi_index index.php;
+      include fastcgi_params;
+      fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+      fastcgi_param PATH_INFO $fastcgi_path_info;
+  }
+
+    location / {
+      try_files $uri $uri/ index.php?query_string;
+      gzip_static on;
+  }
+}
+</div></li><li class="list__item" id="ipgi4w_50"><p id="ipgi4w_59">Crear una nueva carpeta dentro de docker-compose/mysql que tendra la inicializacion de acrhcivos de MySQL:</p><div class="code-block" data-lang="bash">
+  mkdir docker-compose/mysql
+</div></li><li class="list__item" id="ipgi4w_51"><p id="ipgi4w_61">Abrir el archivo init_db.sql dentro de la carpeta anterior:</p><div class="code-block" data-lang="bash">
+  touch docker-compose/mysql/init_db.sql
+</div></li><li class="list__item" id="ipgi4w_52"><p id="ipgi4w_63">Copiar el siguiente contenido en init_db.sql:</p><div class="code-block" data-lang="sql">
+  DROP TABLE IF EXISTS `places`;
+
+  CREATE TABLE `places` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `visited` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+  INSERT INTO `places` (name, visited) VALUES ('Berlin', 0),('Budapest', 0),('Cincinnati', 1),('Denver', 0),('Helsinki', 0),('Lisbon', 0),('Moscow', 1),('Nairobi', 0),('Oslo', 1),('Rio', 0),('Tokyo', 0); 
+</div></li></ul><section class="chapter"><h3 id="creando-el-docker-compose-yml" data-toc="creando-el-docker-compose-yml">Creando el docker-compose.yml</h3><ul class="list _bullet" id="ipgi4w_65"><li class="list__item" id="ipgi4w_66"><p id="ipgi4w_68">Crear el docker-compose.yml en la ra&iacute;z del proyecto:</p><div class="code-block" data-lang="bash">
+  touch docker-compose.yml
+</div></li><li class="list__item" id="ipgi4w_67"><p id="ipgi4w_70">Copiar el siguiente contenido dentro del docker-compose.yml:</p><div class="code-block" data-lang="yaml">
+  services:
+    frontend-service:
+      build:
+        args:
+          user: admin
+          uid: 1000
+        context: ./
+        dokerfile: Dokerfile
+      image: DockerLaravelApp
+      container_name: docker-laravel-app
+      restart: unless-stopped
+      working_dir: /var/www/
+      volumes:
+        - ./:/var/www
+      networks:
+        - laravel-app
+
+    db:
+      image: mysql:8.0
+      container_name: frontend_db
+      restart: unless-stopped
+      environment:
+        MYSQL_DATABASE: ${DB_DATABASE}
+        MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+        MYSQL_PASSWORD: ${DB_PASSWORD}
+        MYSQL_USER: ${DB_USERNAME}
+        SERVICE_TAGS: dev
+        SERVICE_NAME: mysql
+      volumnes:
+        - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+      networks:
+        - laravel-app
+
+    nginx:
+      image: nxing:alpine
+      container_name: nginx
+      restart: unless-stopped
+      ports:
+        - 8000:80
+      volumes:
+        - ./:/var/www
+        - ./docker-compose/nginx:/etc/nginx/config.d/
+      networks:
+        - laravel-app
+
+  networks:
+    laravel-app:
+      driver: bridge
+</div></li></ul></section><section class="chapter"><h3 id="corriendo-la-aplicaci-n" data-toc="corriendo-la-aplicaci-n">Corriendo la aplicaci&oacute;n</h3><ul class="list _bullet" id="ipgi4w_72"><li class="list__item" id="ipgi4w_73"><p id="ipgi4w_76">Para crear la aplicaci&oacute;n es necesario correr comandos de Docker:</p><div class="code-block" data-lang="bash">
+  docker-compose build frontend-service
+</div></li><li class="list__item" id="ipgi4w_74"><p id="ipgi4w_78">Una vez que termine de crear el servicio, es necesario levantar el servicio con:</p><div class="code-block" data-lang="bash">
+  docker-compose up -d
+</div></li><li class="list__item" id="ipgi4w_75"><p id="ipgi4w_80">Para ver los servicios Docker que esten funcionando:</p><div class="code-block" data-lang="bash">
+  docker-compose ps
+</div></li></ul></section></section><div class="last-modified">Last modified: 01 octubre 2024</div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom"></div></article><div id="disqus_thread"></div></div></section></main></div><script src="https://resources.jetbrains.com/writerside/apidoc/6.10.0-b419/app.js"></script></body></html>
