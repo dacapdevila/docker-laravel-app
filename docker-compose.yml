@@ -65,9 +65,6 @@ services:
     depends_on:
       - frontend-service
       - kitchen-service
-    ports:
-      - "8000:80"
-      - "8001:81"
     networks:
       - laravel-app
 

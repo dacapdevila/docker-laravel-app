@@ -3,9 +3,9 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return 'chanchon te amo';
 });
 
-Route::get('/a', function () {
-    return '2a';
+Route::get('/1', function () {
+    return '123';
 });
