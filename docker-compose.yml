@@ -57,11 +57,14 @@ services:
     container_name: nginx
     restart: unless-stopped
     ports:
-      - "8000:80"
+      - "80:80"
+      - "443:443"
     volumes:
       - ./docker-compose/nginx:/etc/nginx/conf.d
       - ./frontend-service:/var/www/frontend
       - ./kitchen-service:/var/www/kitchen
+      - /etc/letsencrypt/live/dariocapdevila.com.ar:/etc/letsencrypt/live/dariocapdevila.com.ar
+      - /etc/letsencrypt/archive/dariocapdevila.com.ar:/etc/letsencrypt/archive/dariocapdevila.com.ar
     depends_on:
       - frontend-service
       - kitchen-service
