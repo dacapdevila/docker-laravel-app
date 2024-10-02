@@ -6,12 +6,28 @@ services:
         uid: 1000
       context: ./frontend-service
       dockerfile: Dockerfile
-    image: dockerlaravelapp
-    container_name: docker-laravel-app
+    image: frontendapp
+    container_name: frontendapp
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
       - ./frontend-service:/var/www
+    networks:
+      - laravel-app
+
+  kitchen-service:
+    build:
+      args:
+        user: admin
+        uid: 1000
+      context: ./kitchen-service
+      dockerfile: Dockerfile
+    image: kitchenapi
+    container_name: kitchenapi
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./kitchen-service:/var/www
     networks:
       - laravel-app
 
@@ -42,6 +58,7 @@ services:
       - "8000:80"
     volumes:
       - ./frontend-service:/var/www
+      - ./kitchen-service:/var/www
       - ./docker-compose/nginx:/etc/nginx/conf.d/
     depends_on:
       - frontend-service
