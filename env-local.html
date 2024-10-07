@@ -1,0 +1,52 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en-US" data-preset="contrast" data-primary-color="#307FFF"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><meta name="built-on" content="2024-10-06T21:53:23.6693126"><title>.env (local) | Docker Tutorial</title><script type="application/json" id="virtual-toc-data">[{"id":"creando-el-dockerfile-del-servicio","level":0,"title":"Creando el Dockerfile del servicio","anchor":"#creando-el-dockerfile-del-servicio"},{"id":"para-el-frontend-service","level":0,"title":"Para el frontend-service","anchor":"#para-el-frontend-service"},{"id":"para-el-kitchen-service","level":0,"title":"Para el kitchen-service","anchor":"#para-el-kitchen-service"}]</script><script type="application/json" id="topic-shortcuts"></script><link href="https://resources.jetbrains.com/writerside/apidoc/6.10.0-b419/app.css" rel="stylesheet"><meta name="msapplication-TileColor" content="#000000"><link rel="apple-touch-icon" sizes="180x180" href="https://jetbrains.com/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="https://jetbrains.com/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="https://jetbrains.com/favicon-16x16.png"><meta name="msapplication-TileImage" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-144x144.png"><meta name="msapplication-square70x70logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-70x70.png"><meta name="msapplication-square150x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-150x150.png"><meta name="msapplication-wide310x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x150.png"><meta name="msapplication-square310x310logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x310.png"><meta name="image" content=""><!-- Open Graph --><meta property="og:title" content=".env (local) | Docker Tutorial"><meta property="og:description" content=""><meta property="og:image" content=""><meta property="og:site_name" content="Docker Tutorial Help"><meta property="og:type" content="website"><meta property="og:locale" content="en_US"><meta property="og:url" content="writerside-documentation/env-local.html"><!-- End Open Graph --><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content=""><meta name="twitter:title" content=".env (local) | Docker Tutorial"><meta name="twitter:description" content=""><meta name="twitter:creator" content=""><meta name="twitter:image:src" content=""><!-- End Twitter Card --><!-- Schema.org WebPage --><script type="application/ld+json">{
+    "@context": "http://schema.org",
+    "@type": "WebPage",
+    "@id": "writerside-documentation/env-local.html#webpage",
+    "url": "writerside-documentation/env-local.html",
+    "name": ".env (local) | Docker Tutorial",
+    "description": "",
+    "image": "",
+    "inLanguage":"en-US"
+}</script><!-- End Schema.org --><!-- Schema.org WebSite --><script type="application/ld+json">{
+    "@type": "WebSite",
+    "@id": "writerside-documentation/#website",
+    "url": "writerside-documentation/",
+    "name": "Docker Tutorial Help"
+}</script><!-- End Schema.org --></head><body data-id="env-local" data-main-title=".env (local)" data-article-props="{&quot;seeAlsoStyle&quot;:&quot;links&quot;}" data-template="article" data-breadcrumbs="Docker-Tutorial.md|Docker Tutorial///Local-Configuration.md|Local Configuration"><div class="wrapper"><main class="panel _main"><header class="panel__header"><div class="container"><h3>Docker Tutorial  Help</h3><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="env-local" id="env-local.md">.env (local)</h1><section class="chapter"><h2 id="creando-el-dockerfile-del-servicio" data-toc="creando-el-dockerfile-del-servicio">Creando el Dockerfile del servicio</h2><ul class="list _bullet" id="-hmooem_6"><li class="list__item" id="-hmooem_7"><p>Crear nuevo branch: &quot; <span class="control" id="-hmooem_8">base-1-local</span> &quot;.</p></li></ul></section><section class="chapter"><h2 id="para-el-frontend-service" data-toc="para-el-frontend-service">Para el frontend-service</h2><ul class="list _bullet" id="-hmooem_9"><li class="list__item" id="-hmooem_10"><p id="-hmooem_12">En el caso de que dentro de frontend-service/ no exista un archivo .env, se debe crear:</p><div class="code-block" data-lang="bash">
+cp .env.example .env
+</div></li><li class="list__item" id="-hmooem_11"><p id="-hmooem_14">Editar el archivo <span class="control" id="-hmooem_16"><code class="code" id="-hmooem_17">.env</code></span></p><div class="code-block" data-lang="bash">
+APP_NAME=&quot;Frontend Service&quot;
+APP_ENV=local
+APP_KEY=
+APP_DEBUG=true
+APP_URL=http://localhost:8000
+
+DB_CONNECTION=null
+#DB_HOST=db
+#DB_PORT=3306
+#DB_DATABASE=frontend
+#DB_USERNAME=frontend_user
+#DB_PASSWORD=secret_password
+
+# These variables will be used on docker-compose.yml
+...
+</div></li></ul></section><section class="chapter"><h2 id="para-el-kitchen-service" data-toc="para-el-kitchen-service">Para el kitchen-service</h2><ul class="list _bullet" id="-hmooem_18"><li class="list__item" id="-hmooem_19"><p id="-hmooem_21">En el caso de que dentro de kitchen-service/ no exista un archivo .env, se debe crear:</p><div class="code-block" data-lang="bash">
+cp .env.example .env
+</div></li><li class="list__item" id="-hmooem_20"><p id="-hmooem_23">Editar el archivo <span class="control" id="-hmooem_25"><code class="code" id="-hmooem_26">.env</code></span></p><div class="code-block" data-lang="bash">
+APP_NAME=&quot;Kitchen Service&quot;
+APP_ENV=local
+APP_KEY=
+APP_DEBUG=true
+APP_URL=http://localhost:8000/kitchen
+
+DB_CONNECTION=mysql
+DB_HOST=db
+DB_PORT=3306
+DB_DATABASE=kitchen_db
+DB_USERNAME=kitchen_user
+DB_PASSWORD=kitchen_password
+
+# These variables will be used on docker-compose.yml
+...
+</div></li></ul></section><div class="last-modified">Last modified: 07 octubre 2024</div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom"><a href="local-configuration.html" class="navigation-links__prev">Local Configuration</a><a href="dockerfile-local.html" class="navigation-links__next">Dockerfile (local)</a></div></article><div id="disqus_thread"></div></div></section></main></div><script src="https://resources.jetbrains.com/writerside/apidoc/6.10.0-b419/app.js"></script></body></html>

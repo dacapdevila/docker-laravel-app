@@ -1,0 +1,127 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en-US" data-preset="contrast" data-primary-color="#307FFF"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><meta name="built-on" content="2024-10-06T21:53:23.6693126"><title>Dockerfile | Docker Tutorial</title><script type="application/json" id="virtual-toc-data">[{"id":"para-el-frontend-service","level":0,"title":"Para el frontend-service","anchor":"#para-el-frontend-service"},{"id":"para-el-kitchen-service","level":0,"title":"Para el kitchen-service","anchor":"#para-el-kitchen-service"},{"id":"para-el-order-service","level":0,"title":"Para el order-service","anchor":"#para-el-order-service"},{"id":"para-el-warehouse-service","level":0,"title":"Para el warehouse-service","anchor":"#para-el-warehouse-service"}]</script><script type="application/json" id="topic-shortcuts"></script><link href="https://resources.jetbrains.com/writerside/apidoc/6.10.0-b419/app.css" rel="stylesheet"><meta name="msapplication-TileColor" content="#000000"><link rel="apple-touch-icon" sizes="180x180" href="https://jetbrains.com/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="https://jetbrains.com/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="https://jetbrains.com/favicon-16x16.png"><meta name="msapplication-TileImage" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-144x144.png"><meta name="msapplication-square70x70logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-70x70.png"><meta name="msapplication-square150x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-150x150.png"><meta name="msapplication-wide310x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x150.png"><meta name="msapplication-square310x310logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x310.png"><meta name="image" content=""><!-- Open Graph --><meta property="og:title" content="Dockerfile | Docker Tutorial"><meta property="og:description" content=""><meta property="og:image" content=""><meta property="og:site_name" content="Docker Tutorial Help"><meta property="og:type" content="website"><meta property="og:locale" content="en_US"><meta property="og:url" content="writerside-documentation/dockerfile.html"><!-- End Open Graph --><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content=""><meta name="twitter:title" content="Dockerfile | Docker Tutorial"><meta name="twitter:description" content=""><meta name="twitter:creator" content=""><meta name="twitter:image:src" content=""><!-- End Twitter Card --><!-- Schema.org WebPage --><script type="application/ld+json">{
+    "@context": "http://schema.org",
+    "@type": "WebPage",
+    "@id": "writerside-documentation/dockerfile.html#webpage",
+    "url": "writerside-documentation/dockerfile.html",
+    "name": "Dockerfile | Docker Tutorial",
+    "description": "",
+    "image": "",
+    "inLanguage":"en-US"
+}</script><!-- End Schema.org --><!-- Schema.org WebSite --><script type="application/ld+json">{
+    "@type": "WebSite",
+    "@id": "writerside-documentation/#website",
+    "url": "writerside-documentation/",
+    "name": "Docker Tutorial Help"
+}</script><!-- End Schema.org --></head><body data-id="Dockerfile" data-main-title="Dockerfile" data-article-props="{&quot;seeAlsoStyle&quot;:&quot;links&quot;}" data-template="article" data-breadcrumbs="Docker-Tutorial.md|Docker Tutorial///Prod-Configuration.md|Prod Configuration"><div class="wrapper"><main class="panel _main"><header class="panel__header"><div class="container"><h3>Docker Tutorial  Help</h3><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Dockerfile" id="Dockerfile.md">Dockerfile</h1><section class="chapter"><h2 id="para-el-frontend-service" data-toc="para-el-frontend-service">Para el frontend-service</h2><ul class="list _bullet" id="-wpuu1b_7"><li class="list__item" id="-wpuu1b_8"><p id="-wpuu1b_10">Crear Dockerfile:</p><div class="code-block" data-lang="bash">
+ touch Dockerfile
+</div></li><li class="list__item" id="-wpuu1b_9"><p id="-wpuu1b_12">Copiar el siguiente contenido al Dockerfile:</p><div class="code-block" data-lang="dockerfile">
+# Placed in frontend-service/Dockerfile
+FROM php:8.2-fpm
+
+# Install system dependecies
+RUN apt-get update &amp;&amp; apt-get install -y \
+ git \
+ curl \
+ libpng-dev \
+ libonig-dev \
+ libxml2-dev \
+ zip \
+ unzip
+
+# Clear cache
+RUN apt-get clean &amp;&amp; rm -rf /var/lib/apt/lists/*
+
+# Install PHP extensions
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+
+# Get latest Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Set working directory
+WORKDIR /var/www/frontend
+</div></li></ul></section><section class="chapter"><h2 id="para-el-kitchen-service" data-toc="para-el-kitchen-service">Para el kitchen-service</h2><ul class="list _bullet" id="-wpuu1b_14"><li class="list__item" id="-wpuu1b_15"><p id="-wpuu1b_17">Crear Dockerfile:</p><div class="code-block" data-lang="bash">
+ touch Dockerfile
+</div></li><li class="list__item" id="-wpuu1b_16"><p id="-wpuu1b_19">Copiar el siguiente contenido al Dockerfile:</p><div class="code-block" data-lang="dockerfile">
+# Placed in kitchen-service/Dockerfile
+FROM php:8.2-fpm
+
+# Install system dependecies
+RUN apt-get update &amp;&amp; apt-get install -y \
+ git \
+ curl \
+ libpng-dev \
+ libonig-dev \
+ libxml2-dev \
+ zip \
+ unzip
+
+# Clear cache
+RUN apt-get clean &amp;&amp; rm -rf /var/lib/apt/lists/*
+
+# Install PHP extensions
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+
+# Get latest Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Set working directory
+WORKDIR /var/www/kitchen
+
+</div></li></ul></section><section class="chapter"><h2 id="para-el-order-service" data-toc="para-el-order-service">Para el order-service</h2><ul class="list _bullet" id="-wpuu1b_21"><li class="list__item" id="-wpuu1b_22"><p id="-wpuu1b_24">Crear Dockerfile:</p><div class="code-block" data-lang="bash">
+ touch Dockerfile
+</div></li><li class="list__item" id="-wpuu1b_23"><p id="-wpuu1b_26">Copiar el siguiente contenido al Dockerfile:</p><div class="code-block" data-lang="dockerfile">
+# Placed in order-service/Dockerfile
+FROM php:8.2-fpm
+
+# Install system dependecies
+RUN apt-get update &amp;&amp; apt-get install -y \
+ git \
+ curl \
+ libpng-dev \
+ libonig-dev \
+ libxml2-dev \
+ zip \
+ unzip
+
+# Clear cache
+RUN apt-get clean &amp;&amp; rm -rf /var/lib/apt/lists/*
+
+# Install PHP extensions
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+
+# Get latest Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Set working directory
+WORKDIR /var/www/order
+
+</div></li></ul></section><section class="chapter"><h2 id="para-el-warehouse-service" data-toc="para-el-warehouse-service">Para el warehouse-service</h2><ul class="list _bullet" id="-wpuu1b_28"><li class="list__item" id="-wpuu1b_29"><p id="-wpuu1b_31">Crear Dockerfile:</p><div class="code-block" data-lang="bash">
+ touch Dockerfile
+</div></li><li class="list__item" id="-wpuu1b_30"><p id="-wpuu1b_33">Copiar el siguiente contenido al Dockerfile:</p><div class="code-block" data-lang="dockerfile">
+# Placed in warehouse-service/Dockerfile
+FROM php:8.2-fpm
+
+# Install system dependecies
+RUN apt-get update &amp;&amp; apt-get install -y \
+ git \
+ curl \
+ libpng-dev \
+ libonig-dev \
+ libxml2-dev \
+ zip \
+ unzip
+
+# Clear cache
+RUN apt-get clean &amp;&amp; rm -rf /var/lib/apt/lists/*
+
+# Install PHP extensions
+RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+
+# Get latest Composer
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+# Set working directory
+WORKDIR /var/www/warehouse
+
+</div></li></ul></section><div class="last-modified">Last modified: 07 octubre 2024</div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom"><a href="env.html" class="navigation-links__prev">.env</a><a href="nginx.html" class="navigation-links__next">Nginx</a></div></article><div id="disqus_thread"></div></div></section></main></div><script src="https://resources.jetbrains.com/writerside/apidoc/6.10.0-b419/app.js"></script></body></html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en-US" data-preset="contrast" data-primary-color="#307FFF"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><meta name="built-on" content="2024-10-06T21:53:23.7065616"><title>Run App (local) | Docker Tutorial</title><script type="application/json" id="virtual-toc-data">[{"id":"corriendo-la-aplicaci-n","level":0,"title":"Corriendo la aplicación","anchor":"#corriendo-la-aplicaci-n"}]</script><script type="application/json" id="topic-shortcuts"></script><link href="https://resources.jetbrains.com/writerside/apidoc/6.10.0-b419/app.css" rel="stylesheet"><meta name="msapplication-TileColor" content="#000000"><link rel="apple-touch-icon" sizes="180x180" href="https://jetbrains.com/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="https://jetbrains.com/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="https://jetbrains.com/favicon-16x16.png"><meta name="msapplication-TileImage" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-144x144.png"><meta name="msapplication-square70x70logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-70x70.png"><meta name="msapplication-square150x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-150x150.png"><meta name="msapplication-wide310x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x150.png"><meta name="msapplication-square310x310logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x310.png"><meta name="image" content=""><!-- Open Graph --><meta property="og:title" content="Run App (local) | Docker Tutorial"><meta property="og:description" content=""><meta property="og:image" content=""><meta property="og:site_name" content="Docker Tutorial Help"><meta property="og:type" content="website"><meta property="og:locale" content="en_US"><meta property="og:url" content="writerside-documentation/run-app-local.html"><!-- End Open Graph --><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content=""><meta name="twitter:title" content="Run App (local) | Docker Tutorial"><meta name="twitter:description" content=""><meta name="twitter:creator" content=""><meta name="twitter:image:src" content=""><!-- End Twitter Card --><!-- Schema.org WebPage --><script type="application/ld+json">{
+    "@context": "http://schema.org",
+    "@type": "WebPage",
+    "@id": "writerside-documentation/run-app-local.html#webpage",
+    "url": "writerside-documentation/run-app-local.html",
+    "name": "Run App (local) | Docker Tutorial",
+    "description": "",
+    "image": "",
+    "inLanguage":"en-US"
+}</script><!-- End Schema.org --><!-- Schema.org WebSite --><script type="application/ld+json">{
+    "@type": "WebSite",
+    "@id": "writerside-documentation/#website",
+    "url": "writerside-documentation/",
+    "name": "Docker Tutorial Help"
+}</script><!-- End Schema.org --></head><body data-id="Run-App-local" data-main-title="Run App (local)" data-article-props="{&quot;seeAlsoStyle&quot;:&quot;links&quot;}" data-template="article" data-breadcrumbs="Docker-Tutorial.md|Docker Tutorial///Local-Configuration.md|Local Configuration"><div class="wrapper"><main class="panel _main"><header class="panel__header"><div class="container"><h3>Docker Tutorial  Help</h3><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Run-App-local" id="Run-App-local.md">Run App (local)</h1><section class="chapter"><h2 id="corriendo-la-aplicaci-n" data-toc="corriendo-la-aplicaci-n">Corriendo la aplicaci&oacute;n</h2><ul class="list _bullet" id="z1qzwn4_4"><li class="list__item" id="z1qzwn4_5"><p id="z1qzwn4_17">En el caso de necesitar eliminar lo construido:</p><div class="code-block" data-lang="bash">
+  docker-compose down
+</div></li><li class="list__item" id="z1qzwn4_6"><p id="z1qzwn4_19">Para crear la aplicaci&oacute;n es necesario correr comandos de Docker:</p><div class="code-block" data-lang="bash">
+  docker-compose build frontend-service
+  docker-compose build kitchen-service
+</div></li><li class="list__item" id="z1qzwn4_7"><p id="z1qzwn4_21">Una vez que termine de crear el servicio, es necesario levantar el servicio con:</p><div class="code-block" data-lang="bash">
+  docker-compose up -d
+</div></li><li class="list__item" id="z1qzwn4_8"><p id="z1qzwn4_23">Para ver los servicios Docker que esten funcionando:</p><div class="code-block" data-lang="bash">
+  docker-compose ps
+</div></li><li class="list__item" id="z1qzwn4_9"><p id="z1qzwn4_25">A&uacute;n es necesario correr algunos comandos m&aacute;s:</p><div class="code-block" data-lang="bash">
+  docker-compose exec frontend-service ls -l
+  docker-compose exec kitchen-service ls -l
+</div></li><li class="list__item" id="z1qzwn4_10"><p id="z1qzwn4_27">Correr compose install en frontend-service:</p><div class="code-block" data-lang="bash">
+  docker-compose exec frontend-service rm -rf vendor composer.lock
+  docker-compose exec frontend-service composer install
+</div></li><li class="list__item" id="z1qzwn4_11"><p id="z1qzwn4_29">Correr compose install en kitchen-service:</p><div class="code-block" data-lang="bash">
+  docker-compose exec kitchen-service rm -rf vendor composer.lock
+  docker-compose exec kitchen-service composer install
+</div></li><li class="list__item" id="z1qzwn4_12"><p id="z1qzwn4_31">Crear el APP_KEY en frontend-service:</p><div class="code-block" data-lang="bash">
+  docker-compose exec frontend-service php artisan key:generate
+</div></li><li class="list__item" id="z1qzwn4_13"><p id="z1qzwn4_33">Crear el APP_KEY en kitchen-service:</p><div class="code-block" data-lang="bash">
+  docker-compose exec kitchen-service php artisan key:generate
+</div></li><li class="list__item" id="z1qzwn4_14"><p id="z1qzwn4_35">Correr migraciones en frontend-service:</p><div class="code-block" data-lang="bash">
+  docker-compose exec frontend-service php artisan migrate
+</div></li><li class="list__item" id="z1qzwn4_15"><p id="z1qzwn4_37">Correr migraciones en kitchen-service:</p><div class="code-block" data-lang="bash">
+  docker-compose exec kitchen-service php artisan migrate
+</div></li><li class="list__item" id="z1qzwn4_16"><p id="z1qzwn4_39">Abrir la url:</p><div class="code-block" data-lang="bash">
+  http://localhost:8000
+  http://localhost:8000/kitchen
+</div></li></ul></section><div class="last-modified">Last modified: 07 octubre 2024</div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom"><a href="docker-compose-yml-local.html" class="navigation-links__prev">docker-compose.yml (local)</a><a href="prod-configuration.html" class="navigation-links__next">Prod Configuration</a></div></article><div id="disqus_thread"></div></div></section></main></div><script src="https://resources.jetbrains.com/writerside/apidoc/6.10.0-b419/app.js"></script></body></html>

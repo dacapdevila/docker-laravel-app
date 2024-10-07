@@ -1,0 +1,123 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en-US" data-preset="contrast" data-primary-color="#307FFF"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><meta name="built-on" content="2024-10-06T21:53:23.7095715"><title>docker-compose.yml | Docker Tutorial</title><script type="application/json" id="virtual-toc-data">[{"id":"creando-el-docker-compose-yml","level":0,"title":"Creando el docker-compose.yml","anchor":"#creando-el-docker-compose-yml"},{"id":"env-general","level":0,"title":".env (general)","anchor":"#env-general"}]</script><script type="application/json" id="topic-shortcuts"></script><link href="https://resources.jetbrains.com/writerside/apidoc/6.10.0-b419/app.css" rel="stylesheet"><meta name="msapplication-TileColor" content="#000000"><link rel="apple-touch-icon" sizes="180x180" href="https://jetbrains.com/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="https://jetbrains.com/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="https://jetbrains.com/favicon-16x16.png"><meta name="msapplication-TileImage" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-144x144.png"><meta name="msapplication-square70x70logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-70x70.png"><meta name="msapplication-square150x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-150x150.png"><meta name="msapplication-wide310x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x150.png"><meta name="msapplication-square310x310logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x310.png"><meta name="image" content=""><!-- Open Graph --><meta property="og:title" content="docker-compose.yml | Docker Tutorial"><meta property="og:description" content=""><meta property="og:image" content=""><meta property="og:site_name" content="Docker Tutorial Help"><meta property="og:type" content="website"><meta property="og:locale" content="en_US"><meta property="og:url" content="writerside-documentation/docker-compose-yml.html"><!-- End Open Graph --><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content=""><meta name="twitter:title" content="docker-compose.yml | Docker Tutorial"><meta name="twitter:description" content=""><meta name="twitter:creator" content=""><meta name="twitter:image:src" content=""><!-- End Twitter Card --><!-- Schema.org WebPage --><script type="application/ld+json">{
+    "@context": "http://schema.org",
+    "@type": "WebPage",
+    "@id": "writerside-documentation/docker-compose-yml.html#webpage",
+    "url": "writerside-documentation/docker-compose-yml.html",
+    "name": "docker-compose.yml | Docker Tutorial",
+    "description": "",
+    "image": "",
+    "inLanguage":"en-US"
+}</script><!-- End Schema.org --><!-- Schema.org WebSite --><script type="application/ld+json">{
+    "@type": "WebSite",
+    "@id": "writerside-documentation/#website",
+    "url": "writerside-documentation/",
+    "name": "Docker Tutorial Help"
+}</script><!-- End Schema.org --></head><body data-id="docker-compose-yml" data-main-title="docker-compose.yml" data-article-props="{&quot;seeAlsoStyle&quot;:&quot;links&quot;}" data-template="article" data-breadcrumbs="Docker-Tutorial.md|Docker Tutorial///Prod-Configuration.md|Prod Configuration"><div class="wrapper"><main class="panel _main"><header class="panel__header"><div class="container"><h3>Docker Tutorial  Help</h3><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="docker-compose-yml" id="docker-compose-yml.md">docker-compose.yml</h1><section class="chapter"><h2 id="creando-el-docker-compose-yml" data-toc="creando-el-docker-compose-yml">Creando el docker-compose.yml</h2><ul class="list _bullet" id="x58a0t_5"><li class="list__item" id="x58a0t_6"><p id="x58a0t_8">Crear el docker-compose.yml en la ra&iacute;z del proyecto:</p><div class="code-block" data-lang="bash">
+  touch docker-compose.yml
+</div></li><li class="list__item" id="x58a0t_7"><p id="x58a0t_10">Copiar el siguiente contenido dentro del docker-compose.yml:</p><div class="code-block" data-lang="yaml">
+services:
+frontend-service:
+  build:
+    context: ./frontend-service
+    dockerfile: Dockerfile
+  container_name: frontend-service
+  restart: unless-stopped
+  working_dir: /var/www/frontend
+  volumes:
+    - ./frontend-service:/var/www/frontend
+  networks:
+    - laravel-app
+  expose:
+    - 9000
+
+kitchen-service:
+  build:
+    context: ./kitchen-service
+    dockerfile: Dockerfile
+  container_name: kitchen-service
+  restart: unless-stopped
+  working_dir: /var/www/kitchen
+  volumes:
+    - ./kitchen-service:/var/www/kitchen
+  networks:
+    - laravel-app
+  expose:
+    - 9000
+
+order-service:
+  build:
+    context: ./order-service
+    dockerfile: Dockerfile
+  container_name: order-service
+  restart: unless-stopped
+  working_dir: /var/www/order
+  volumes:
+    - ./order-service:/var/www/order
+  networks:
+    - laravel-app
+  expose:
+    - 9000
+
+warehouse-service:
+  build:
+    context: ./warehouse-service
+    dockerfile: Dockerfile
+  container_name: warehouse-service
+  restart: unless-stopped
+  working_dir: /var/www/warehouse
+  volumes:
+    - ./warehouse-service:/var/www/warehouse
+  networks:
+    - laravel-app
+  expose:
+    - 9000
+
+db:
+  platform: linux/x86_64
+  image: mysql:8.0
+  container_name: db
+  restart: unless-stopped
+  environment:
+    MYSQL_DATABASE: ${DB_DATABASE}
+    MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    SERVICE_TAGS: dev
+    SERVICE_NAME: mysql
+  volumes:
+    - ./docker-compose/mysql:/docker-entrypoint-initdb.d
+  ports:
+    - &quot;3306:3306&quot;
+  networks:
+    - laravel-app
+
+nginx:
+  image: nginx:alpine
+  container_name: nginx
+  restart: unless-stopped
+  ports:
+    - &quot;80:80&quot;
+    - &quot;443:443&quot;
+  volumes:
+    - ./docker-compose/nginx:/etc/nginx/conf.d
+    - ./frontend-service:/var/www/frontend
+    - ./kitchen-service:/var/www/kitchen
+    - ./order-service:/var/www/order
+    - ./warehouse-service:/var/www/warehouse
+    - /etc/letsencrypt/live/dariocapdevila.com.ar:/etc/letsencrypt/live/dariocapdevila.com.ar
+    - /etc/letsencrypt/archive/dariocapdevila.com.ar:/etc/letsencrypt/archive/dariocapdevila.com.ar
+  depends_on:
+    - frontend-service
+    - kitchen-service
+    - order-service
+    - warehouse-service
+  networks:
+    - laravel-app
+
+  networks:
+    laravel-app:
+      driver: bridge
+</div></li></ul></section><section class="chapter"><h2 id="env-general" data-toc="env-general">.env (general)</h2><div class="code-block" data-lang="bash">
+  DB_DATABASE=db
+  DB_USERNAME=db_user
+  DB_PASSWORD=secret_password
+</div></section><div class="last-modified">Last modified: 07 octubre 2024</div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom"><a href="mysql.html" class="navigation-links__prev">MySQL</a><a href="docker-compose-override-yml.html" class="navigation-links__next">docker-compose.override.yml</a></div></article><div id="disqus_thread"></div></div></section></main></div><script src="https://resources.jetbrains.com/writerside/apidoc/6.10.0-b419/app.js"></script></body></html>

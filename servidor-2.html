@@ -1,0 +1,48 @@
+<!DOCTYPE html SYSTEM "about:legacy-compat">
+<html lang="en-US" data-preset="contrast" data-primary-color="#307FFF"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta charset="UTF-8"><meta name="robots" content="noindex"><meta name="built-on" content="2024-10-06T21:53:23.6693126"><title>Servidor-2 | Docker Tutorial</title><script type="application/json" id="virtual-toc-data">[]</script><script type="application/json" id="topic-shortcuts"></script><link href="https://resources.jetbrains.com/writerside/apidoc/6.10.0-b419/app.css" rel="stylesheet"><meta name="msapplication-TileColor" content="#000000"><link rel="apple-touch-icon" sizes="180x180" href="https://jetbrains.com/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="https://jetbrains.com/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="https://jetbrains.com/favicon-16x16.png"><meta name="msapplication-TileImage" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-144x144.png"><meta name="msapplication-square70x70logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-70x70.png"><meta name="msapplication-square150x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-150x150.png"><meta name="msapplication-wide310x150logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x150.png"><meta name="msapplication-square310x310logo" content="https://resources.jetbrains.com/storage/ui/favicons/mstile-310x310.png"><meta name="image" content=""><!-- Open Graph --><meta property="og:title" content="Servidor-2 | Docker Tutorial"><meta property="og:description" content=""><meta property="og:image" content=""><meta property="og:site_name" content="Docker Tutorial Help"><meta property="og:type" content="website"><meta property="og:locale" content="en_US"><meta property="og:url" content="writerside-documentation/servidor-2.html"><!-- End Open Graph --><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:site" content=""><meta name="twitter:title" content="Servidor-2 | Docker Tutorial"><meta name="twitter:description" content=""><meta name="twitter:creator" content=""><meta name="twitter:image:src" content=""><!-- End Twitter Card --><!-- Schema.org WebPage --><script type="application/ld+json">{
+    "@context": "http://schema.org",
+    "@type": "WebPage",
+    "@id": "writerside-documentation/servidor-2.html#webpage",
+    "url": "writerside-documentation/servidor-2.html",
+    "name": "Servidor-2 | Docker Tutorial",
+    "description": "",
+    "image": "",
+    "inLanguage":"en-US"
+}</script><!-- End Schema.org --><!-- Schema.org WebSite --><script type="application/ld+json">{
+    "@type": "WebSite",
+    "@id": "writerside-documentation/#website",
+    "url": "writerside-documentation/",
+    "name": "Docker Tutorial Help"
+}</script><!-- End Schema.org --></head><body data-id="Servidor-2" data-main-title="Servidor-2" data-article-props="{&quot;seeAlsoStyle&quot;:&quot;links&quot;}" data-template="article" data-breadcrumbs="Docker-Tutorial.md|Docker Tutorial///Digital-Ocean.md|Digital Ocean"><div class="wrapper"><main class="panel _main"><header class="panel__header"><div class="container"><h3>Docker Tutorial  Help</h3><div class="panel-trigger"></div></div></header><section class="panel__content"><div class="container"><article class="article" data-shortcut-switcher="inactive"><h1 data-toc="Servidor-2" id="Servidor-2.md">Servidor-2</h1><ul class="list _bullet" id="-1np05o_3"><li class="list__item" id="-1np05o_18"><p id="-1np05o_23">Verificar que esta configurado correctamente (de vuelta en droplet):</p><div class="code-block" data-lang="bash">
+ssh -T git@github.com
+</div></li><li class="list__item" id="-1np05o_19"><p id="-1np05o_25">Clonar el repo:</p><div class="code-block" data-lang="bash">
+  git clone -b BRANCH_NAME https://github.com/USERNAME/REPOSITORY.git
+</div></li><li class="list__item" id="-1np05o_20"><p id="-1np05o_27">Levantar los contenedores:</p><div class="code-block" data-lang="bash">
+  cd REPOSITORY
+  docker-compose up --build -d
+  docker ps
+</div></li><li class="list__item" id="-1np05o_21"><p id="-1np05o_29">Instalar Certbot:</p><div class="code-block" data-lang="bash">
+  sudo apt update
+  sudo apt install certbot python3-certbot-nginx -y
+</div></li><li class="list__item" id="-1np05o_22"><p id="-1np05o_31">Generar los certificados SSL:</p><div class="code-block" data-lang="bash">
+  sudo certbot --nginx -d dariocapdevila.com.ar -d www.dariocapdevila.com.ar
+</div></li></ul><p id="-1np05o_4">Known Issue:</p><div class="code-block" data-lang="bash">
+  Error response from daemon: driver failed programming external connectivity on endpoint nginx (f4b4570cb5558e6d5a965a5c27b38967080e5bc48a1dcb1b678c627ba8c4d0cf): failed to bind port 0.0.0.0:80/tcp: Error starting userland proxy: listen tcp4 0.0.0.0:80: bind: address already in use
+</div><p id="-1np05o_6">Verificar que esta usando el puerto 80:</p><div class="code-block" data-lang="bash">
+  sudo lsof -i :80
+</div><p id="-1np05o_8">Detener el proceso que corre en el puerto 80:</p><div class="code-block" data-lang="bash">
+  sudo systemctl stop nginx
+</div><div class="code-block" data-lang="bash">
+  sudo systemctl stop apache2
+</div><div class="code-block" data-lang="bash">
+  sudo systemctl stop nginx
+</div><p id="-1np05o_12">Volver a iniciar los contenedores:</p><div class="code-block" data-lang="bash">
+  docker-compose up --build -d
+</div><p id="-1np05o_14">Otro Known Issue:</p><div class="code-block" data-lang="bash">
+  docker-compose exec frontend-service rm -rf vendor composer.lock
+  
+  root@docker-app-testing:~/docker-laravel-app# docker-compose exec frontend-service rm -rf vendor composer.lock
+  rm: cannot remove 'composer.lock': Permission denied
+</div><p id="-1np05o_16">Se debe correr el comando como root:</p><div class="code-block" data-lang="bash">
+  docker-compose exec --user root frontend-service rm -rf vendor composer.lock
+</div><div class="last-modified">Last modified: 07 octubre 2024</div><div data-feedback-placeholder="true"></div><div class="navigation-links _bottom"><a href="github.html" class="navigation-links__prev">Github</a></div></article><div id="disqus_thread"></div></div></section></main></div><script src="https://resources.jetbrains.com/writerside/apidoc/6.10.0-b419/app.js"></script></body></html>
